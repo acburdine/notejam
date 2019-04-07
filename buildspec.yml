@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - $(aws ecr get-login --no-include-email)
+      - cd app
+      - npm ci
+      - IMAGE_TAG=$ECR_REPO_URL:$(git rev-parse HEAD)
+  build:
+    commands:
+      - npm test
+      - cd ../
+      - docker build -f Dockerfile app -t $IMAGE_TAG
+  post_build:
+    commands:
+      - docker tag $IMAGE_TAG $ECR_REPO_URL:latest
+      - docker push $IMAGE_TAG
+      - docker push $ECR_REPO_URL:latest
+      - printf '[{"name":"notejam","imageUri":"%s"}]' $IMAGE_TAG | tee imagedefinitions.json
+
+artifacts:
+  files: imagedefinitions.json
