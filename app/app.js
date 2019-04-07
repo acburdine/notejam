@@ -70,6 +70,10 @@ app.use(function(req, res, next){
   }
 });
 
+app.use('/health', (req, res) => {
+  res.status(200).send({ ok: true });
+});
+
 app.use('/', users);
 app.use('/', pads);
 app.use('/', notes);
