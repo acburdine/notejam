@@ -1,5 +1,5 @@
 ****************
-Notejam: Express
+Notejam: Express/Mysql
 ****************
 
 Notejam application implemented using `Express.js <http://expressjs.com/>`_ microframework.
