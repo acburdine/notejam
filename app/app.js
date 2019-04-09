@@ -10,14 +10,18 @@ var orm = require('orm');
 var expressValidator = require('express-validator');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var xray = require('aws-xray-sdk');
 
 var users = require('./routes/users');
 var pads = require('./routes/pads');
 var notes = require('./routes/notes');
-var settings = require('./settings')
+var settings = require('./settings');
+
+orm.addAdapter('mysql', require('./mysqldriver'));
 
 var app = express();
 
+app.use(xray.express.openSegment('notejam'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -106,5 +110,7 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
+app.use(xray.express.closeSegment());
 
 module.exports = app;

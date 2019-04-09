@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "async": "*",
+    "aws-xray-sdk": "^2.2.0",
     "bcrypt": "*",
     "body-parser": "~1.0.0",
     "connect-flash": "~0.1.1",
