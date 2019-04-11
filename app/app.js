@@ -21,6 +21,8 @@ orm.addAdapter('mysql', require('./mysqldriver'));
 
 var app = express();
 
+console.log('Starting Up');
+
 app.use(xray.express.openSegment('notejam'));
 
 // view engine setup
